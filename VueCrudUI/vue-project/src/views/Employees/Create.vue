@@ -6,14 +6,18 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <div v-if="savesuccess == true" class="alert alert-success" role="alert">
+                    <div v-if="savesuccess == true" class="alert alert-warning" role="alert">
                         Employee Added Successfully
+                    </div>
+                </div>
+                <div  v-if="modelerror == true" v-for="error in modelstate"  class="mb-3">
+                    <div  class="alert alert-warning">
+                        {{ error.toString() }}
                     </div>
                 </div>
                 <div class="mb-3">
                     <label  for="">First Name<span class="text-danger">*</span></label>
                     <p v-if="this.errortext.First != ''" class="alert alert-warning">{{ this.errortext.First }}</p>
-                    <!-- <input @onkeydown = "alphaonly({event.key})" type='text' v-model="model.employee.firstName" class="form-control"> -->
                     <input onkeydown="return /[a-zA-Z]/i.test(event.key)" type='text' v-model="model.employee.firstName" class="form-control">
                 </div>
                 <div class="mb-3">
@@ -57,10 +61,14 @@ import { stringifyExpression } from '@vue/compiler-core';
 import axios from 'axios';
 export default
     {
+        
         name: "EmployeeCreate",
         data() {
+            
             return {
+                modelerror : false,
                 employee: '',
+                modelstate: {},
                 savesuccess : false,
                 errortext: {
                     First: '',
@@ -68,7 +76,7 @@ export default
                 },
                 count: 0,
                 model: {
-
+                   
                     employee: {
                         firstName: '',
                         lastName: '',
@@ -76,8 +84,10 @@ export default
                         city: '',
                         isActive: 'true'
                     }
-                }
+                },
+
             }
+             
         },
         methods: {
 
@@ -95,10 +105,9 @@ export default
                     this.errortext.City = "City Cannot be Empty."
                     this.count = 2
                 }
-                console.log(this.model.employee);
                 if (this.count == 0) {
                     axios.post('https://localhost:7130/api/Employees', this.model.employee)
-                        .then(res =>
+                        .then(res => {
                             this.model.employee = {
                                 firstName: '',
                                 lastName: '',
@@ -107,30 +116,16 @@ export default
                                 isActive: 'true'
                             },
                             this.savesuccess = true,
-                            setTimeout(x => (this.savesuccess = false),1000),
+                            setTimeout(x => (this.savesuccess = false),1500)
                             window.location.href = '/employees'
+                        }
                         )
-                        .catch(function (error) {
-                            if (error.response) {
-                                if (error.response.status == 422) {
-
-                                }
-                                console.log(error.response.data);
-                                console.log(error.response.status);
-                                console.log(error.response.headers);
-                            } else if (error.request) {
-                                console.log(error.request);
-                            } else {
-                                console.log('Error', error.message);
-                            }
-                            console.log(error.config);
+                        .catch(error => {
+                            this.modelstate = error.response.data
+                            this.modelerror = true
                         });
                 }
-            },
-            // alphaonly(key) {
-            //     console.log("key");
-            // return /[a-zA-Z]/i.test(key);
-            // }   
+            },  
         }
     }
 </script>

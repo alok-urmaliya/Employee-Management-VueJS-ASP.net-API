@@ -6,12 +6,22 @@
             </div>
             <div class="card-body">
                 <div class="mb-3">
-                    <label for="">FirstName<span class="text-danger">*</span></label>
+                    <div v-if="modelerror != true & updatesuccess == true" class="alert alert-success" role="alert">
+                        Employee Updated Successfully
+                    </div>
+                </div>
+                <div  v-if="modelerror == true" v-for="error in modelstate"  class="mb-3">
+                    <div  class="alert alert-warning">
+                        {{ error.toString() }}
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="">First Name<span class="text-danger">*</span></label>
                     <p v-if="this.errortext.First != ''" class="alert alert-warning">{{ this.errortext.First }}</p>
                     <input onkeydown="return /[a-zA-Z]/i.test(event.key)" type="text" v-model="model.employee.firstName" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="">LastName</label>
+                    <label for="">Last Name</label>
                     <input onkeydown="return /[a-zA-Z]/i.test(event.key)" type="text" v-model="model.employee.lastName" class="form-control">
                 </div>
                 <div class="mb-3">
@@ -36,7 +46,8 @@
                     <input onkeydown="return /[a-zA-Z]/i.test(event.key)" type="text" v-model="model.employee.city" class="form-control">
                 </div>
                 <div class="mb-3">
-                        <input class="form-check-input" style="margin-left: 3;" value = "true" type="radio" v-model="model.employee.isActive" name="activeRadios" id="exampleRadios1" checked>
+                        <label class="mb-2" style="display:block" for=""> Is Active </label>
+                        <input class="form-check-input" style="margin-left: 200000;" value = "true" type="radio" v-model="model.employee.isActive" name="activeRadios" id="exampleRadios1" checked>
                         <label class="form-check-label" for="exampleRadios1">
                             Yes
                         </label>
@@ -63,6 +74,9 @@ export default
         name: "EmployeeEdit",
         data() {
             return {
+                modelerror : false,
+                updatesuccess : false,
+                modelstate: {},
                 errortext: {
                     First: '',
                     City: ''
@@ -113,23 +127,14 @@ export default
                                 city: '',
                                 isActive: ''
                             },
+                            this.updatesuccess = true,
+                            setTimeout(x => (this.updatesuccess = false), 1500),
                             window.location.href = '/employees',
                         )
-                        .catch(function (error) {
-                            if (error.response) {
-                                if (error.response.status == 422) {
-
-                                }
-                                console.log(error.response.data);
-                                console.log(error.response.status);
-                                console.log(error.response.headers);
-                            } else if (error.request) {
-                                console.log(error.request);
-                            } else {
-                                console.log('Error', error.message);
-                            }
-                            console.log(error.config);
-                        });
+                        .catch(error => {
+                            this.modelstate = error.response.data
+                            this.modelerror = true
+                        }); 
                 }
             }
         }

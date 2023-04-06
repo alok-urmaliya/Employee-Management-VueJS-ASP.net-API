@@ -55,42 +55,86 @@ namespace vueCRUD1.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEmployee(int id, Employee employee)
         {
+            int err_count = 0;
             if (id != employee.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(employee).State = EntityState.Modified;
-
-            try
+            if (employee.FirstName.Any(char.IsDigit))
             {
-                await _context.SaveChangesAsync();
+                err_count++;
+                ModelState.AddModelError("FirstName", "First Name can only contain letters");
             }
-            catch (DbUpdateConcurrencyException)
+            if (employee.LastName.Any(char.IsDigit))
             {
-                if (!EmployeeExists(id))
+                err_count++;
+                ModelState.AddModelError("LastName", "Last Name can only contain letters");
+            }
+            if (employee.City.Any(char.IsDigit))
+            {
+                err_count++;
+                ModelState.AddModelError("City", "City can only contain letters");
+            }
+            if (err_count == 0)
+            {
+                _context.Entry(employee).State = EntityState.Modified;
+
+                try
                 {
-                    return NotFound();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!EmployeeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
             }
-
+            else
+            {
+                return UnprocessableEntity(ModelState);
+            }
             return NoContent();
         }
 
         [HttpPost]
         public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
         {
-          if (_context.Employee == null)
-          {
-              return Problem("Entity set 'vueCRUD1Context.Employee'  is null.");
-          }
-            _context.Employee.Add(employee);
-            await _context.SaveChangesAsync();
-
+            int err_count = 0;
+            if (_context.Employee == null)
+            {
+                return Problem("Entity set 'vueCRUDContext.Employee'  is null.");
+            }
+            if (employee.FirstName.Any(char.IsDigit))
+            {
+                err_count++;
+                ModelState.AddModelError("FirstName", "First Name can only contain letters");
+            }
+            if (employee.LastName.Any(char.IsDigit))
+            {
+                err_count++;
+                ModelState.AddModelError("LastName", "Last Name can only contain letters");
+            }
+            if (employee.City.Any(char.IsDigit))
+            {
+                err_count++;
+                ModelState.AddModelError("City", "City can only contain letters");
+            }
+            if (err_count == 0)
+            {
+                _context.Employee.Add(employee);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return UnprocessableEntity(ModelState);
+            }
+            err_count = 0;
             return CreatedAtAction("GetEmployee", new { id = employee.Id }, employee);
         }
 

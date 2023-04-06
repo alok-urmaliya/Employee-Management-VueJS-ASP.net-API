@@ -1,5 +1,17 @@
 <template>
     <main>
+        <div ref="myModal" class="modal">
+            <div class="modal-content">
+                <span @click="this.$refs.myModal.style = 'display:none'" class="close">&times;</span>
+                <div style="margin: auto;">
+                    <p>Are you Sure you want to delete <br> {{ this.delinfo.deletegender }}{{ this.delinfo.deleteName }}</p>
+                    <button @click="DeleteEmployee(this.deleteid)" class="btn btn-outline-primary"
+                        style="width : 50px; margin-left : 55px; margin-right: 4px;" value="Yes">Yes</button>
+                    <button @click="this.$refs.myModal.style = 'display:none'" class="btn btn-outline-primary"
+                        style="width : 50px; margin-left: 4px;" value="No">No</button>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-header">
                 Employees
@@ -8,6 +20,11 @@
             <div class="card-body">
                 <div class="mb-3">
                     <div v-if="deletesuccess == true" class="alert alert-success" role="alert">
+                        Employee Deleted Successfully
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div v-if="validationsuccess == true" class="alert alert-success" role="alert">
                         Employee Deleted Successfully
                     </div>
                 </div>
@@ -37,8 +54,9 @@
                                     class="btn btn-outline-primary">
                                     Edit
                                 </RouterLink>
-                                <button type="button" @click="DeleteEmployee(employee.id)" style="margin-left: 20px;"
-                                    class="btn btn-outline-danger">Delete</button>
+                                <button type="button" id="myBtn"
+                                    @click="openModal(employee.id, employee.firstName, employee.gender)"
+                                    style="margin-left: 20px;" class="btn btn-outline-danger"> Delete</button>
                             </td>
                         </tr>
                     </tbody>
@@ -53,14 +71,31 @@
 
 <script>
 import axios from 'axios'
+import { ref } from 'vue'
 export default {
     name: 'employees',
     data() {
         return {
+            modalvisible: false,
             deletesuccess: false,
-            employees: []
+            validationsuccess: false,
+            delinfo: {
+                deleteid: '',
+                deleteName: '',
+                deletegender: ''
+            },
+            employees: [],
+            delemp: {
+                id: '',
+                firstName: '',
+                lastName: '',
+                gender: '',
+                city: '',
+                isActive: ''
+            }
         }
     },
+
     mounted() {
         this.getEmployees();
     },
@@ -71,16 +106,67 @@ export default {
                 this.employees = res.data;
             });
         },
+        getEmployeeId(EmployeeId) {
+            axios.get(`https://localhost:7130/api/Employees/${EmployeeId}`).then(res => {
+                this.delemp = res.data;
+            });
+        },
+        openModal(employeeId, employeeFirstName, employeeGender) {
+            let button = this.$refs.myModal
+            button.style = 'display:block'
+            this.delinfo.deleteid = employeeId
+            this.delinfo.deleteName = employeeFirstName
+            this.delinfo.deletegender = employeeGender == "Male" ? "Mr." : "Mrs."
+        },
         DeleteEmployee(EmployeeID) {
-            if (confirm("Are you sure you want to delete this Employee record?")) {
-                axios.delete(`https://localhost:7130/api/Employees/${EmployeeID}`).then(res => {
-                    alert("employee deleted successfully")
-                    this.deletesuccess = true
-                    setTimeout(x => this.deletesuccess = false, 3000)
-                    this.getEmployees();
-                })
-            }
+            this.getEmployeeId(EmployeeID)
+            axios.delete(`https://localhost:7130/api/Employees/${EmployeeID}`).then(res => {
+                console.log(this.deleteques)
+                this.modalvisible = false
+                this.deletesuccess = true
+                this.$refs.myModal.style = 'display:none'
+                setTimeout(x => this.deletesuccess = false, 1500)
+                this.getEmployees();
+            });
         }
     }
 }
 </script>
+
+
+<style scoped>
+.modal {
+    display: none;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 20%;
+
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+</style>
