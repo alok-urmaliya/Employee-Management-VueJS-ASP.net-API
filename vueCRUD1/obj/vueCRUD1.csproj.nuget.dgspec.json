@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Test\\Sheets\\vueCRUD1\\vueCRUD1.csproj": {}
+    "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj": {}
   },
   "projects": {
-    "C:\\Test\\Sheets\\vueCRUD1\\vueCRUD1.csproj": {
+    "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Test\\Sheets\\vueCRUD1\\vueCRUD1.csproj",
+        "projectUniqueName": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
         "projectName": "vueCRUD1",
-        "projectPath": "C:\\Test\\Sheets\\vueCRUD1\\vueCRUD1.csproj",
-        "packagesPath": "C:\\Users\\PC 2\\.nuget\\packages\\",
-        "outputPath": "C:\\Test\\Sheets\\vueCRUD1\\obj\\",
+        "projectPath": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
+        "packagesPath": "C:\\Users\\aloku\\.nuget\\packages\\",
+        "outputPath": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\PC 2\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aloku\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -91,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -5,7 +5,7 @@
                 <span @click="this.$refs.myModal.style = 'display:none'" class="close">&times;</span>
                 <div style="margin: auto;">
                     <p>Are you Sure you want to delete <br> {{ this.delinfo.deletegender }}{{ this.delinfo.deleteName }}</p>
-                    <button @click="DeleteEmployee(this.deleteid)" class="btn btn-outline-primary"
+                    <button @click="DeleteEmployee(this.delinfo.deleteid)" class="btn btn-outline-primary"
                         style="width : 50px; margin-left : 55px; margin-right: 4px;" value="Yes">Yes</button>
                     <button @click="this.$refs.myModal.style = 'display:none'" class="btn btn-outline-primary"
                         style="width : 50px; margin-left: 4px;" value="No">No</button>
