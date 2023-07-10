@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FhAK52/h0e0CzKnR0nHFydoHYJKaQSeMP2IsFiTkxe2n42sQFPmTDWbzt8UccFVJvJFGmWR6DnHfygs42HLAbA==",
+  "dgSpecHash": "gDmeKY2JTLoRdahdHdEkIF5RJ7NxK2WjfPnhspEIlYr+X/BtuMKQFcLVy9pfrc0Gy4T0mcysAO1BJ9fGSpz+iw==",
   "success": true,
-  "projectFilePath": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
+  "projectFilePath": "D:\\PROJECTS\\ASP.Net\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\aloku\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\aloku\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

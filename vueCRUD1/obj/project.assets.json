@@ -10347,11 +10347,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
+      "projectUniqueName": "D:\\PROJECTS\\ASP.Net\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
       "projectName": "vueCRUD1",
-      "projectPath": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
+      "projectPath": "D:\\PROJECTS\\ASP.Net\\VueJS-and-ASP.net\\vueCRUD1\\vueCRUD1.csproj",
       "packagesPath": "C:\\Users\\aloku\\.nuget\\packages\\",
-      "outputPath": "D:\\PROJECTS\\VueJS-and-ASP.net\\vueCRUD1\\obj\\",
+      "outputPath": "D:\\PROJECTS\\ASP.Net\\VueJS-and-ASP.net\\vueCRUD1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\aloku\\AppData\\Roaming\\NuGet\\NuGet.Config",
